@@ -1,38 +1,40 @@
 <template>
-  <!-- 모달창 -->
-  <div class="black-bg" v-if="onModal === true">
-    <div class="white-bg">
-      <h4>{{ products[pickProductId].title }}</h4>
-      <img :src="products[pickProductId].image" class="room-img" alt="원룸 사진">
-      <p>{{ products[pickProductId].content }}</p>
-      <p>{{ products[pickProductId].price }}</p>
-      <button @click="onModal = false">창 닫기</button>
-    </div>
-  </div>
+  <!-- 모달창 props 사용 (부모 데이터를 자식 컴포넌트로 전송 -->
+  <!-- Component 활용 -->
+  <Modal
+      :products="products"
+      :pickProductId="pickProductId"
+      :onModal="onModal"
+  />
 
   <div class="menu">
     <!-- key 는 인덱스로 자주 사용 -->
     <a v-for="(menu,i) in menus" :key="i"> {{ menu }} </a>
   </div>
 
-  <div v-for="(product,i) in products" :key="i">
-    <!-- 속성에 바인딩 시 콜론 기억 -->
-    <img :src="product.image" class="room-img" alt="원룸 사진">
-    <h4 @click="onModal = true; pickProductId = i">{{ product.title }}</h4>
-    <h4>{{ product.content }}</h4>
-    <h4>{{ product.price }}만원</h4>
-  </div>
+  <!-- Component 활용 -->
+  <Discount/>
+
+  <!-- Component 활용 -->
+  <Card v-for="(product, i) in products" :key="i"
+      :product="product"
+      :pickProductId="i"
+  />
+
 </template>
 
 <script>
-import roomProducts from './products.js'
+import products from './products.js'
+import Discount from "./components/Discount.vue"
+import Modal from "./components/Modal.vue";
+import Card from "./components/Card.vue"
 
 export default {
   name: 'App',
   // 데이터 바구니 data(){} 로 실시간 자동 렌더링 데이터 바인딩 가능
   data() {
     return {
-      products: roomProducts,
+      products: products,
       prices: [50, 60, 60],
       menus: ['Home', 'Products', 'About'],
       reportCounts: [0, 0, 0],
@@ -51,6 +53,9 @@ export default {
   },
 
   components: {
+    Discount: Discount,
+    Modal: Modal,
+    Card: Card,
   }
 }
 </script>
@@ -78,26 +83,5 @@ export default {
 .room-img {
   width: 100%;
   margin-top: 40px;
-}
- 
-/* 모달창 디자인 */
-body {
-  margin: 0
-}
-
-div {
-  box-sizing: border-box
-}
-
-.black-bg {
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 5);
-  position: fixed; padding: 20px;
-}
-
-.white-bg {
-  width: 100%; background: white;
-  border-radius: 8px;
-  padding: 20px;
 }
 </style>
