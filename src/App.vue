@@ -14,40 +14,25 @@
     <a v-for="(menu,i) in menus" :key="i"> {{ menu }} </a>
   </div>
 
-  <div>
-    <img src="./assets/room0.jpg" class="room-img">
-    <h4 @click="onModal = true">{{ products[0] }}</h4>
-    <p>{{ prices[0] }} 만원</p>
-    <button @click="reportCounts[0]++">허위매물 신고</button> 
-    <span> 신고수: {{ reportCounts[0] }}</span>
-  </div>
-
-  <div>
-    <img src="./assets/room1.jpg" class="room-img">
-    <h4>{{ products[1] }}</h4>
-    <p>{{ prices[1] }} 만원</p>
-    <button @click="reportCounts[1]++">허위매물 신고</button> 
-    <span> 신고수: {{ reportCounts[1] }}</span>
-  </div>
-
-  <div>
-    <img src="./assets/room2.jpg" class="room-img">
-    <h4>{{ products[2] }}</h4>
-    <p>{{ prices[2] }} 만원</p>
-    <button @click="reportCounts[2]++">허위매물 신고</button> 
-    <span> 신고수: {{ reportCounts[2] }}</span>
+  <div v-for="(product,i) in products" :key="i">
+    <!-- 속성에 바인딩 시 콜론 기억 -->
+    <img :src="products[i].image" class="room-img">
+    <h4 @click="onModal = true">{{ products[i].title }}</h4>
+    <h4>{{ products[i].content }}</h4>
+    <h4>{{ products[i].price }}만원</h4>
   </div>
 
 </template>
 
 <script>
+import roomProducts from './products.js'
 
 export default {
   name: 'App',
   // 데이터 바구니 data(){} 로 실시간 자동 렌더링 데이터 바인딩 가능
   data() {
     return {
-      products: ['역삼동 원룸', '천호동 원룸', '마포구 원룸'],
+      products: roomProducts,
       prices: [50, 60, 60],
       menus: ['Home', 'Products', 'About'],
       reportCounts: [0, 0, 0],
