@@ -5,7 +5,7 @@
       <img :src="products[pickProductId].image" class="room-img" alt="원룸 사진">
       <p>{{ products[pickProductId].content }}</p>
       <p>{{ products[pickProductId].price }}</p>
-      <!-- <button @click="onModal = false">창 닫기</button> -->
+      <button @click="$emit('closeModal')">창닫기</button>
     </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <!-- 모달창 props 사용 (부모 데이터를 자식 컴포넌트로 전송 -->
   <!-- Component 활용 -->
-  <Modal
+  <Modal @closeModal="onModal = false"
       :products="products"
       :pickProductId="pickProductId"
       :onModal="onModal"
@@ -16,7 +16,10 @@
   <Discount/>
 
   <!-- Component 활용 -->
-  <Card v-for="(product, i) in products" :key="i"
+  <!-- 이벤트 버블링으로 read only 를 해결할 수 있지만 특정 태그에 적용할 순 없다. -->
+  <!-- 자식이 메세지를 송신하면 [@보낸 데이터] 이름 으로 수신받을 수 있다. -->
+  <!-- 자식에 메세지를 송신하면 [갱신할 부모 데이터 = $event] 로 수신받을 수 있다. -->
+  <Card @openModal="onModal = true; pickProductId = $event" v-for="(product, i) in products" :key="i"
       :product="product"
       :pickProductId="i"
   />
