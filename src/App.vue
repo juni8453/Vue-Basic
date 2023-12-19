@@ -1,10 +1,11 @@
 <template>
-
   <!-- 모달창 -->
-  <div class="black-bg" v-if="onModal == true">
+  <div class="black-bg" v-if="onModal === true">
     <div class="white-bg">
-      <h4>상세 페이지임</h4>
-      <p>상세 페이지 내용임</p>
+      <h4>{{ products[pickProductId].title }}</h4>
+      <img :src="products[pickProductId].image" class="room-img" alt="원룸 사진">
+      <p>{{ products[pickProductId].content }}</p>
+      <p>{{ products[pickProductId].price }}</p>
       <button @click="onModal = false">창 닫기</button>
     </div>
   </div>
@@ -16,12 +17,11 @@
 
   <div v-for="(product,i) in products" :key="i">
     <!-- 속성에 바인딩 시 콜론 기억 -->
-    <img :src="products[i].image" class="room-img">
-    <h4 @click="onModal = true">{{ products[i].title }}</h4>
-    <h4>{{ products[i].content }}</h4>
-    <h4>{{ products[i].price }}만원</h4>
+    <img :src="product.image" class="room-img" alt="원룸 사진">
+    <h4 @click="onModal = true; pickProductId = i">{{ product.title }}</h4>
+    <h4>{{ product.content }}</h4>
+    <h4>{{ product.price }}만원</h4>
   </div>
-
 </template>
 
 <script>
@@ -37,6 +37,7 @@ export default {
       menus: ['Home', 'Products', 'About'],
       reportCounts: [0, 0, 0],
       onModal: false,
+      pickProductId: 0,
     }
   },
 
@@ -52,11 +53,9 @@ export default {
   components: {
   }
 }
-
 </script>
 
 <style>
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -92,7 +91,7 @@ div {
 
 .black-bg {
   width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0, 5);
+  background: rgba(0, 0, 0, 5);
   position: fixed; padding: 20px;
 }
 
@@ -101,5 +100,4 @@ div {
   border-radius: 8px;
   padding: 20px;
 }
-
 </style>
