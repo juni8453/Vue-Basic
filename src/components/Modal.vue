@@ -6,7 +6,7 @@
       <p>{{ products[pickProductId].content }}</p>
       <!-- $event.target.value 는 사용자가 입력한 값  -->
       <!-- <input @input="month = $event.target.value"> -->
-      <input v-model.number="month"> <!-- 이게 더 간편 input 은 무조건 문자열 -->
+      <input v-model="month"> <!-- 이게 더 간편, input 은 무조건 문자열 -->
       <p> {{month}}개월 선택 {{ products[pickProductId].price * month }}</p>
       <button @click="$emit('closeModal')">창닫기</button>
     </div>
@@ -23,11 +23,35 @@ export default {
     pickProductId: Number,
     onModal: Boolean,
   },
+
   data() {
     return {
       month: 1,
     }
   },
+
+  watch: {
+    // month 데이터를 감시하는 함수
+    // 데이터 키 값과 함수 이름을 맞춘다. month 데이터가 변할 때 마다 내부 코드가 실행된다.
+    month(inputUserMonthData) {
+      // 문자열을 입력하면 경고문 출력
+      if (parseInt(inputUserMonthData) >= 13) {
+        alert('13 개월 이상 작성할 수 없다.');
+        this.month = 1;
+      }
+
+      if (isNaN(inputUserMonthData) === true) {
+        alert('문자 적지마라.')
+        this.month = 1;
+      }
+
+      // if (isNaN(parseInt(inputUserMonthData))) {
+      //   alert('문자를 작성할 수 없다.');
+      //   this.month = 1;
+      // }
+    }
+  }
+
 }
 </script>
 
