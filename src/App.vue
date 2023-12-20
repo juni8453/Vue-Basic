@@ -1,11 +1,28 @@
 <template>
-  <!-- 모달창 props 사용 (부모 데이터를 자식 컴포넌트로 전송 -->
-  <!-- Component 활용 -->
-  <Modal @closeModal="onModal = false"
-      :products="products"
-      :pickProductId="pickProductId"
-      :onModal="onModal"
-  />
+
+  <!-- 쌩 CSS 로 애니메이션 적용
+  1. 시작 전 class 명
+  2. 끝난 후 class 명
+  3. 원할 떄 부착하고 싶은 위치(1번 뒤) 2번 class 명 부착
+  4. :class = "{ 다이나믹하게 적용할 css class : 조건 }"
+  <div class="start" :class="{ end : onModal }">
+    <Modal @closeModal="onModal = false"
+        :products="products"
+        :pickProductId="pickProductId"
+        :onModal="onModal"
+    />
+  </div>
+  -->
+
+  <transition name="fade">
+    <!-- 모달창 props 사용 (부모 데이터를 자식 컴포넌트로 전송 -->
+    <!-- Component 활용 -->
+    <Modal @closeModal="onModal = false"
+           :products="products"
+           :pickProductId="pickProductId"
+           :onModal="onModal"
+    />
+  </transition>
 
   <div class="menu">
     <!-- key 는 인덱스로 자주 사용 -->
@@ -86,4 +103,46 @@ export default {
   width: 100%;
   margin-top: 40px;
 }
+
+/*
+쌩 CSS 애니메이션 적용
+*/
+.start {
+  opacity: 0;
+  transition: all 1s;
+}
+
+.end {
+  opacity: 1;
+}
+
+/*
+<transition> 으로 애니메이션 적용
+작명-enter-from / active / to 로 정의
+*/
+.fade-enter-from { /* 시작 스타일 */
+  opacity: 0;
+}
+
+.fade-enter-active { /* 적용할 애니메이션 */
+  transition: all 1s;
+}
+
+.face-enter-to { /* 끝 스타일 */
+  opacity: 1;
+}
+
+/* 퇴장 애니메이션 */
+.fade-leave-from { /* 시작 스타일 */
+  opacity: 1;
+}
+
+.fade-leave-active { /* 적용할 애니메이션 */
+  transition: all 1s;
+}
+
+.face-leave-to { /* 끝 스타일 */
+  opacity: 0;
+}
+
 </style>
