@@ -21,7 +21,6 @@
   <!-- 자식에 메세지를 송신하면 [갱신할 부모 데이터 = $event] 로 수신받을 수 있다. -->
   <Card @openModal="onModal = true; pickProductId = $event" v-for="(product, i) in products" :key="i"
       :product="product"
-      :pickProductId="i"
   />
 
 </template>

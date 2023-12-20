@@ -17,7 +17,6 @@ export default {
   name: "Card.vue",
   props: {
     product: Object,
-    pickProductId: Number,
   }
 }
 </script>
