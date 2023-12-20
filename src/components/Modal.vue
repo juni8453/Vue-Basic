@@ -4,7 +4,10 @@
       <h4>{{ products[pickProductId].title }}</h4>
       <img :src="products[pickProductId].image" class="room-img" alt="원룸 사진">
       <p>{{ products[pickProductId].content }}</p>
-      <p>{{ products[pickProductId].price }}</p>
+      <!-- $event.target.value 는 사용자가 입력한 값  -->
+      <!-- <input @input="month = $event.target.value"> -->
+      <input v-model.number="month"> <!-- 이게 더 간편 input 은 무조건 문자열 -->
+      <p> {{month}}개월 선택 {{ products[pickProductId].price * month }}</p>
       <button @click="$emit('closeModal')">창닫기</button>
     </div>
   </div>
@@ -22,7 +25,7 @@ export default {
   },
   data() {
     return {
-
+      month: 1,
     }
   },
 }
