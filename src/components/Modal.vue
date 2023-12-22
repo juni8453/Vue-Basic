@@ -44,13 +44,17 @@ export default {
         alert('문자 적지마라.')
         this.month = 1;
       }
-
-      // if (isNaN(parseInt(inputUserMonthData))) {
-      //   alert('문자를 작성할 수 없다.');
-      //   this.month = 1;
-      // }
     }
-  }
+  },
+
+  // 데이터 재랜더링 시 동작
+  beforeUpdate(){
+    if (this.month === '2'){
+      alert('2개월은 너무 적음.. 안팜요')
+      this.month = 3;
+    }
+  },
+
 
 }
 </script>

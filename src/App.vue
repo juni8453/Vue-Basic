@@ -30,7 +30,11 @@
   </div>
 
   <!-- Component 활용 -->
-  <Discount/>
+  <Discount v-if="showDiscount === true"/>
+
+  <button @click="priceSortAsc">낮은 가격순 정렬</button>
+  <button @click="priceSortDesc">높은 가격순 정렬</button>
+  <button @click="sortBack">되돌리기</button>
 
   <!-- Component 활용 -->
   <!-- 이벤트 버블링으로 read only 를 해결할 수 있지만 특정 태그에 적용할 순 없다. -->
@@ -53,12 +57,14 @@ export default {
   // 데이터 바구니 data(){} 로 실시간 자동 렌더링 데이터 바인딩 가능
   data() {
     return {
+      originProducts: [...products], // ...[array] 별개의 사본
       products: products,
       prices: [50, 60, 60],
       menus: ['Home', 'Products', 'About'],
       reportCounts: [0, 0, 0],
       onModal: false,
       pickProductId: 0,
+      showDiscount: true,
     }
   },
 
@@ -69,6 +75,37 @@ export default {
     // increaseReportCount() {
     //   this.reportCount += 1;
     // },
+
+    // 가격순 오름차순 정렬
+    priceSortAsc() {
+      this.products.sort(function (a, b) {
+        return a.price - b.price;
+      });
+    },
+
+    // 가격순 내림차순 정렬
+    priceSortDesc() {
+      this.products.sort(function (a, b) {
+        return b.price - a.price;
+      });
+    },
+
+    // 정렬 되돌리기
+    sortBack() {
+      this.products = [...this.originProducts];
+    }
+  },
+
+  // 라이프사이클 훅으로 UI 개발
+  // beforeCreate(), created(), beforeMount(), mounted()
+  // beforeUpdate(), updated(), beforeUnmount(), unmounted() 등
+  // function() {...} 로는 바깥의 데이터를 this 로 사용불가, 애로우 함수 사용
+  // 서버에 데이터를 요청할 때 라이프사이클 훅을 사용한다. (created() / mounted() 많이 사용)
+  mounted() {
+    // 마운트 2초 이후 Discount 배너 사라지도록 하는 예시
+    // setTimeout(() => {
+    //   this.showDiscount = false;
+    // }, 2000);
   },
 
   components: {
